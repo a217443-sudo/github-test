@@ -1,8 +1,347 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head><meta charset="UTF-8"><title>GitHub 連接測試</title></head>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="參考六和機械公開資訊改寫的公司介紹頁，採用年輕化視覺與更好讀的資訊架構。" />
+  <title>六和機械風格公司介紹｜年輕版</title>
+  <style>
+    :root {
+      --bg: #070b16;
+      --panel: #111a2f;
+      --panel-soft: #182544;
+      --line: rgba(255, 255, 255, 0.16);
+      --text: #eaf0ff;
+      --muted: #a9b7d9;
+      --brand: #50cfff;
+      --brand2: #73f0ad;
+      --warning: #ffd166;
+      --radius: 16px;
+      --shadow: 0 10px 26px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background:
+        radial-gradient(1200px 700px at 10% -5%, #243f7a 0%, transparent 52%),
+        radial-gradient(1000px 500px at 90% -5%, #22575f 0%, transparent 45%),
+        var(--bg);
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+      background: rgba(7, 11, 22, 0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      gap: 14px;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: .5px;
+      font-size: 1rem;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav a {
+      padding: 7px 11px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .nav a:hover {
+      border-color: var(--line);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    header { padding: 38px 0 20px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 20px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(17, 26, 47, .95), rgba(24, 37, 68, .9));
+      box-shadow: var(--shadow);
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 700;
+      color: #06131b;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+    }
+
+    h1, h2, h3 { line-height: 1.3; margin: 0 0 10px; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); }
+    h2 { font-size: clamp(1.3rem, 2.8vw, 1.9rem); margin-top: 8px; }
+    p { margin: 0 0 10px; color: var(--muted); }
+
+    .hero-stats {
+      display: grid;
+      gap: 10px;
+    }
+
+    .stat {
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    section { padding: 16px 0; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .card h3 {
+      font-size: 1.02rem;
+      margin-bottom: 6px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: .84rem;
+      color: #d9e4ff;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .timeline {
+      margin: 6px 0 0 0;
+      padding: 0 0 0 16px;
+      border-left: 2px solid rgba(80, 207, 255, 0.5);
+      list-style: none;
+    }
+
+    .timeline li {
+      margin: 0 0 10px;
+      color: var(--muted);
+      padding-left: 10px;
+      position: relative;
+    }
+
+    .timeline li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--brand);
+      position: absolute;
+      left: -20px;
+      top: 9px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 10px 15px;
+      border-radius: 11px;
+      font-weight: 700;
+      color: #06131b;
+      background: linear-gradient(90deg, var(--brand), var(--brand2));
+    }
+
+    .note {
+      margin-top: 10px;
+      border-left: 3px solid var(--warning);
+      padding: 10px 12px;
+      background: rgba(255, 209, 102, .08);
+      color: #ffe9b0;
+      border-radius: 8px;
+      font-size: .92rem;
+    }
+
+    footer {
+      margin: 22px 0 34px;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; }
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
 <body>
-<h1>Hello！GitHub 連接成功！</h1>
-<p>Claude Code 已成功連接 GitHub。</p>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">COMPANY INTRO｜YOUTH EDITION</div>
+      <nav class="nav" aria-label="主導覽">
+        <a href="#about">公司定位</a>
+        <a href="#products">產品項目</a>
+        <a href="#process">製程能力</a>
+        <a href="#culture">人才文化</a>
+        <a href="#contact">聯絡資訊</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="container" id="about">
+    <div class="hero">
+      <div>
+        <span class="tag">參考六和機械公開內容重構</span>
+        <h1>把傳產講清楚：
+          <br />1 分鐘看懂這家金屬製造企業</h1>
+        <p>
+          這是一個針對年輕受眾改寫的公司介紹頁：保留企業重點，拿掉艱深術語，
+          讓第一次接觸製造業的人也能快速理解「公司做什麼、強在哪裡、值不值得加入」。
+        </p>
+        <a class="btn" href="https://www.lioho.com/zh-tw/" target="_blank" rel="noopener">前往六和機械官方網站</a>
+      </div>
+      <div class="hero-stats" aria-label="重點數據">
+        <div class="stat"><strong>1971</strong>創立年份（官網公開資訊）</div>
+        <div class="stat"><strong>50+ 年</strong>黑色/有色金屬製造經驗</div>
+        <div class="stat"><strong>5 大產品群</strong>鑄鐵、輪圈、沖壓鈑金、輕合金、節能</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="products" class="panel">
+      <h2>主要產品項目（年輕版說明）</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>鑄鐵產品</h3>
+          <p>用在高強度、耐用需求的工業零組件，著重穩定量產能力。</p>
+        </article>
+        <article class="card">
+          <h3>輪圈產品</h3>
+          <p>汽車相關核心零件之一，重點在安全、品質與一致性。</p>
+        </article>
+        <article class="card">
+          <h3>沖壓鈑金產品</h3>
+          <p>高速與高精度成形，常見於結構件與外觀件。</p>
+        </article>
+        <article class="card">
+          <h3>輕合金產品</h3>
+          <p>以減重與效率為導向，符合新世代產品設計需求。</p>
+        </article>
+        <article class="card">
+          <h3>節能產品</h3>
+          <p>回應永續與能源效率趨勢，延伸新的應用市場。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="process" class="panel">
+      <h2>核心製程能力</h2>
+      <p>依公開資料整理，重點製程包括模具、熔接焊裝、沖壓成形、管類滾壓、鑄造與加工，並可延伸至塗裝與組立。</p>
+      <div class="chip-row" aria-label="製程標籤">
+        <span class="chip">模具</span>
+        <span class="chip">熔接焊裝</span>
+        <span class="chip">沖壓成形</span>
+        <span class="chip">管類滾壓</span>
+        <span class="chip">鑄造加工</span>
+        <span class="chip">塗裝組立</span>
+      </div>
+    </section>
+
+    <section id="culture" class="panel">
+      <h2>給年輕人的三個關鍵字</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>成長</h3>
+          <p>重視技術能力與跨部門學習，讓職涯不是單一路線。</p>
+        </article>
+        <article class="card">
+          <h3>團隊</h3>
+          <p>強調合作與改善文化，鼓勵提出問題與實際優化。</p>
+        </article>
+        <article class="card">
+          <h3>永續</h3>
+          <p>從製程效率到節能產品，逐步回應 ESG 與減碳趨勢。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>品牌里程碑（精簡）</h2>
+      <ul class="timeline">
+        <li><strong>1971：</strong>企業成立，投入金屬零件製造領域。</li>
+        <li><strong>長期累積：</strong>黑色金屬與有色金屬相關技術與量產經驗。</li>
+        <li><strong>持續升級：</strong>擴展產品組合、強化全球競爭力。</li>
+      </ul>
+      <p class="note">說明：此頁面為「展示型改版」文案，供閱讀體驗優化使用；實際資訊以六和機械官方公告為準。</p>
+    </section>
+  </main>
+
+  <footer class="container" id="contact">
+    <p><strong>聯絡資訊（公開資料）</strong>｜桃園市中壢區新生路二段 334 號｜03-4532131</p>
+    <p>© 2026 Youth-friendly Company Intro. Built for clearer reading and modern visual hierarchy.</p>
+  </footer>
 </body>
 </html>
